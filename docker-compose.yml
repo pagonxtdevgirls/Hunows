@@ -18,7 +18,7 @@ services:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_PASSWORD=mysqlpass
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_DATABASE=products
+      - MYSQL_DATABASE=accounts
       - MYSQL_USER=mysqluser
     ports:
       - 3306:3306
