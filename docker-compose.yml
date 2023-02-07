@@ -1,14 +1,38 @@
 version: "3"
 services:
+  accounts:
+    depends_on:
+      - mysql_accounts
+    image: hunows/account
+    build: account
+    entrypoint: "npm run start:dev"
+    volumes:
+      - ./account:/app
+    ports:
+      - 3000:3000
 
-  #mysql_accounts: 
-    #image: mysql
-    #restart: always
-    #environment:
-      #MYSQL_ROOT_PASSWORD: root
-      #MYSQL_DATABASE: accounts
-    #ports:
-      #- 3307:3306
+  forum:
+    depends_on:
+      - mysql_forum
+    image: hunows/forum
+    build: forum
+    entrypoint: "npm run start:dev"
+    volumes:
+      - ./forum:/app
+    ports:
+      - 3001:3000
+
+  mysql_accounts:
+    image: mysql
+    restart: always
+    environment:
+      #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+    ports:
+      - ${PORT_ACCOUNT}:3306
 
   mysql_forum:
     image: mysql
