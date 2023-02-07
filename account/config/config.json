@@ -1,10 +1,11 @@
 {
   "development": {
     "username": "root",
-    "password": "f30a1cd65530caf64f1ea31f702e7124a1bbee55",
-    "database": "hunows",
+    "password": "root",
+    "database": "accounts",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 3307
   },
   "test": {
     "username": "root",
