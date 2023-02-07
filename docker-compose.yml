@@ -1,12 +1,23 @@
 version: "3"
 services:
 
-  mysql_accounts: 
+  #mysql_accounts: 
+    #image: mysql
+    #restart: always
+    #environment:
+      #MYSQL_ROOT_PASSWORD: root
+      #MYSQL_DATABASE: accounts
+    #ports:
+      #- 3307:3306
+
+  mysql_forum:
     image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: accounts
+      #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_FORUM_DB}
+      MYSQL_USER: ${MYSQL_USER}
     ports:
-      - 3307:3306
-
+      - ${PORT_FORUM}:3306
