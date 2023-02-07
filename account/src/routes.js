@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUserUseCase } from "../src/use-case/createUser.js";
+import { createUser } from './use-case/createUser.js';
 
 
 const router = Router();
@@ -8,8 +8,8 @@ router.post('/accounts/register', async function (req, res, next) {
 
     const { name, email, password } = req.body
 
-    try {
-        const user = await createUserUser(name, email, password);
+   
+        const user = await createUser(name, email, password);
         if (user === undefined) {
             res.status(400).json({ message: 'Account already exists' })
             return next();
@@ -21,10 +21,6 @@ router.post('/accounts/register', async function (req, res, next) {
             email: user.email,
             createdDate: user.createdDate
         });
-    } catch (e) {
-        res.status(400).json({ message: 'Account already exists', e })
-    }
-
 
 });
 
