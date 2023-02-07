@@ -1,7 +1,4 @@
+import * as user from "../../models/user.js"
 export async function saveAccount(account) {
-    const createdAccount = await Account.create(account, {
-   
-    });
-    await createdAccount.save();
-    return createdAccount;
+    return user.create(account);
 }
