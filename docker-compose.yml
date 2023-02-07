@@ -26,13 +26,13 @@ services:
     image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: f30a1cd65530caf64f1ea31f702e7124a1bbee55
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
     ports:
-      - ${PORT_ACCOUNT}:3306
+      - 3306:3306
 
   mysql_forum:
     image: mysql
@@ -44,4 +44,4 @@ services:
       MYSQL_DATABASE: ${MYSQL_FORUM_DB}
       MYSQL_USER: ${MYSQL_USER}
     ports:
-      - ${PORT_FORUM}:3306
+      - 3306:3306
