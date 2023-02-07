@@ -1,5 +1,4 @@
 
-node_modules
 # Logs
 logs
 *.log
@@ -76,4 +75,3 @@ dist
 .dynamodb/
 # TernJS port file
 .tern-port
-
