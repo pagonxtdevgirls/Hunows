@@ -1,9 +1,7 @@
-import client from "./databaseClient.js";
+import { User } from "../../models/user.js";
 
-export async function saveAccount(account) {
-    const createdAccount = await account.create(account, {
-   
-    });
+export async function saveAccount(name,email,password) {
+    const createdAccount = await User.create(name,email,password)
     await createdAccount.save();
     return createdAccount;
 }
