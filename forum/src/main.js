@@ -1,5 +1,5 @@
 const app = require("./app");
-const client = require("./repositories/clietDatabase")
+const client = require("./repositories/clientDatabase")
 
 const port = process.env.PORT;
 
