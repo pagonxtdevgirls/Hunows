@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-node_modules
-.env
-.env.test
-=======
 
+node_modules
 # Logs
 logs
 *.log
@@ -80,4 +76,4 @@ dist
 .dynamodb/
 # TernJS port file
 .tern-port
->>>>>>> 44e54078285449af1a324796dd0d9597ea9497d6
+
