@@ -8,9 +8,9 @@ export class User extends Model {
   }
 }
 User.init({
-  Name: DataTypes.STRING,
-  Email: DataTypes.STRING,
-  Password: DataTypes.STRING
+  name: DataTypes.STRING,
+  email: DataTypes.STRING,
+  password: DataTypes.STRING
 }, {
   sequelize: client,
   modelName: 'User',

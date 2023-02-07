@@ -1,7 +1,9 @@
 import { User } from "../../models/user.js";
 
-export async function saveAccount(name,email,password) {
-    const createdAccount = await User.create(name,email,password)
+export async function saveAccount(user) {
+    console.log(user)
+    const createdAccount = await User.create(user)
+    console.log(createdAccount)
     await createdAccount.save();
     return createdAccount;
 }

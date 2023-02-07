@@ -11,7 +11,6 @@ export async function createUser(name, email, password) {
         name, 
         email,
         password: hashedPassword,
-        createdDate
     };
 
     await saveAccount(user);
