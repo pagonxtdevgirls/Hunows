@@ -13,7 +13,6 @@ async function saveQuestion(question) {
 async function findQuestion() {
 
     const allQuestions = await Question.findAll();
-    console.log(allQuestions)
     return allQuestions
 
 }
