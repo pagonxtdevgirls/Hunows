@@ -4,23 +4,14 @@ import { createUser } from './use-case/createUser.js';
 
 const router = Router();
 
-router.post('/accounts/register', async function (req, res) {
+router.post('/users', async (request, response) => {
+    const { name, email, password } = request.body;
+    const { hasError, errors, user } = await createUser(name, email, password);
 
-    const { name, email, password } = req.body
-
-        const user = await createUser(name, email, password);
-        if (user === undefined) {
-            res.status(400).json({ message: 'Account already exists' })
-        }
-
-        res.status(201).json({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            createdDate: user.createdDate
-        });
-
-
+    if(hasError) {
+        return response.status(400).json(errors);
+    }
+    return response.status(201).json(user);
 });
 
 router.post('/accounts/login', async (req, res) => {
