@@ -1,8 +1,21 @@
 const Router = require('express');
 const { createQuestionUseCase } = require('./use-case/createQuestion');
+const { listQuestions } = require('./use-case/listQuestions');
 const {createAnswerUseCase} = require('./use-case/createAnswer');
 
+
 const router = Router();
+
+router.get('/questions', async (req, res) => {
+
+    try {
+        const questions = await listQuestions()
+        res.status(200).json(questions);
+    } catch (error) {
+        res.json({ status: 'Error getting questions!', message: error.message });
+    }
+
+});
 
 
 router.post('/questions', async function (req, res) {

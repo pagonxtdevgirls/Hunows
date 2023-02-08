@@ -3,14 +3,14 @@ const { saveQuestion } = require('../repositories/questionRepository');
 
 const questionValidator = joi.object({
     title: joi.string().trim().min(2).max(250).required(),
-    body: joi.string().trim().min(10).max(5000).required(),
-    keywords: joi.string().trim().required(),
-    id_question: joi.string().trim().required().guid({ version: ['uuidv4'] })
+    question: joi.string().trim().min(10).max(5000).required(),
+    user_name: joi.string().trim().required(),
+    user_id: joi.string().trim().required()
 })
 
 async function createQuestionUseCase(question, id) {
-    const id_question = id;
-    const createQuestion = { id_question, ...question }
+    const user_id = id;
+    const createQuestion = { user_id, ...question }
     const { error } = questionValidator.validate(createQuestion, { abortEarly: false });
 
     if (error) {
