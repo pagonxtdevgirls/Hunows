@@ -12,13 +12,13 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      body: {
+      question: {
         type: Sequelize.TEXT
       },
-      keywords: {
+      user_name: {
         type: Sequelize.STRING
       },
-      id_question: {
+      user_id: {
         type: Sequelize.UUID
       },
       createdAt: {
