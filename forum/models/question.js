@@ -1,8 +1,10 @@
+const Answer = require('../models/answer')
+const client = require('../src/repositories/clientDatabase')
 'use strict';
 const {
-  Model
+  Model, DataTypes
 } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const answer = require('../models/answer');
   class Question extends Model {
     /**
      * Helper method for defining associations.
@@ -10,17 +12,26 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      
     }
   }
   Question.init({
     title: DataTypes.STRING,
-    question: DataTypes.TEXT,
+    body: DataTypes.TEXT,
     user_name: DataTypes.STRING,
-    user_id: DataTypes.UUID
+    user_id: DataTypes.STRING,
+    question_id: DataTypes.STRING
   }, {
-    sequelize,
+    sequelize: client,
     modelName: 'Question',
   });
-  return Question;
-};
+  Question.Answer = Answer.hasMany(Answer, {
+    foreignKey: "answer_id",
+    as: "answers",
+  });
+  
+  Answer.belongsTo(Question, { foreignKey: "id" });
+
+  module.exports =  Question
+  
+ 

@@ -2,21 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Responses', {
+    await queryInterface.createTable('Forums', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nameUser: {
+      name_forum: {
         type: Sequelize.STRING
-      },
-      solved: {
-        type: Sequelize.STRING
-      },
-      answers: {
-        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +23,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Responses');
+    await queryInterface.dropTable('Forums');
   }
 };

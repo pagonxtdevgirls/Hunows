@@ -11,26 +11,26 @@ const questionValidator = joi.object({
 async function createQuestionUseCase(question, id) {
     const user_id = id;
     const createQuestion = { user_id, ...question }
-    const { error } = questionValidator.validate(createQuestion, { abortEarly: false });
+   // const { error } = questionValidator.validate(createQuestion, { abortEarly: false });
 
-    if (error) {
-        return {
-            hasErrors: true,
-            errors: error.details.map(error => ({
-                message: error.message,
-                property: error.path.at(0),
-            })),
-            product: createQuestion,
-        }
-    }
+    // if (error) {
+    //     return {
+    //         hasErrors: true,
+    //         errors: error.details.map(error => ({
+    //             message: error.message,
+    //             property: error.path.at(0),
+    //         })),
+    //         question: createQuestion,
+    //     }
+    // }
 
     const savedQuestion = await saveQuestion(createQuestion)
 
-    return {
-        hasErrors: false,
-        errors: undefined,
-        question: savedQuestion
-    };
+    // return {
+    //     hasErrors: false,
+    //     errors: undefined,
+    //     question: savedQuestion
+    // };
 }
 
 module.exports = { createQuestionUseCase }
