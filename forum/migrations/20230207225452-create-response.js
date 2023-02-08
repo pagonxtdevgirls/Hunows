@@ -9,6 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      nameUser: {
+        type: Sequelize.STRING
+      },
       solved: {
         type: Sequelize.STRING
       },
