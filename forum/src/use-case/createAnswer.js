@@ -2,10 +2,10 @@ const joi = require('joi');
 const { saveAnswer } = require('../repositories/questionRepository');
 
 const answerValidator = joi.object({
-    name: joi.string().trim().required(),
-    body: joi.string().trim().min(10).max(5000).required(),
-    //keywords: joi.string().trim().required(),
-    id_answer: joi.string().trim().required().guid({ version: ['uuidv4'] })
+    nameUser: joi.string().trim().required(),
+    answers: joi.string().trim().min(10).max(5000).required(),
+    //solved: joi.string().trim().required(),
+   id_answer: joi.string().trim().required().guid({ version: ['uuidv4'] })
 })
 
 async function createAnswerUseCase(answer, id) {
