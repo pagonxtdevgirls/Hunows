@@ -1,6 +1,7 @@
 const client = require("./clientDatabase")
 const DataTypes = require("sequelize");
 const Question = require("../../models/question")(client, DataTypes);
+const Response = require("../../models/response")
 
 async function saveQuestion(question) {
 
@@ -17,4 +18,12 @@ async function findQuestion() {
 
 }
 
-module.exports = { saveQuestion, findQuestion }
+async function saveAnswer(answer) {
+
+    const createdAnswer = await Response(client, DataTypes).create(answer);
+    await createdAnswer.save();
+    return createdAnswer;
+
+}
+
+module.exports = { saveQuestion, saveAnswer }
