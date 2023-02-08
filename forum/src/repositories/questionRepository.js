@@ -1,12 +1,21 @@
-const Question = require("../../models/question")
-const DataTypes = require("sequelize");
 const client = require("./clientDatabase")
+const DataTypes = require("sequelize");
+const Question = require("../../models/question")(client, DataTypes);
+
 async function saveQuestion(question) {
 
-    const createdQuestion = await Question(client, DataTypes).create(question);
+    const createdQuestion = await Question.create(question);
     await createdQuestion.save();
     return createdQuestion;
 
 }
 
-module.exports = { saveQuestion }
+async function findQuestion() {
+
+    const allQuestions = await Question.findAll();
+    console.log(allQuestions)
+    return allQuestions
+
+}
+
+module.exports = { saveQuestion, findQuestion }
