@@ -1,0 +1,17 @@
+
+import { hashPassword } from '../helpers/password.js';
+import { saveAccount } from '../repositories/accountRepository.js';
+
+
+export async function createUser(name, email, password) {
+
+    const hashedPassword = await hashPassword(password);
+    const user = {
+        name, 
+        email,
+        password: hashedPassword,
+    };
+
+    await saveAccount(user);
+    return user;
+}
