@@ -2,10 +2,10 @@ import { hashPassword } from '../helpers/password.js';
 import { saveAccount } from '../repositories/accountRepository.js';
 import joi from 'joi';
 
-const accountValidator = joi.object({
-    name: joi.string().trim().required(),
-    email: joi.string().email().required(),
-    password: joi.string().trim().min(6),
+    const accountValidator = joi.object({
+        name: joi.string().trim().required(),
+        email: joi.string().trim().email().required(),
+        password: joi.string().trim().min(6),
 })
 
 export async function createUser(name, email, password) {
@@ -34,6 +34,6 @@ export async function createUser(name, email, password) {
     return {
         hasError: false,
         errors: undefined,
-        account: {...user}
+        user: {...user}
     };
 }
