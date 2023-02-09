@@ -18,8 +18,25 @@ async function saveQuestion(question) {
 
 async function findQuestion() {
 
-    const allQuestions = await Question.findAll();
-    return allQuestions
+    const questions = await Question.findAll({
+        include: [
+            { association: Question.Answer, as: 'answers' },
+            { association: Question.Keyword, as: 'keywords' }
+        ]
+    });
+    return questions
+
+}
+async function findOneQuestion(id) {
+
+    const question = await Question.findOne({
+        where: { id: id },
+        include: [
+            { association: Question.Answer, as: 'answers' },
+            { association: Question.Keyword, as: 'keywords' }
+        ]
+    });
+    return question
 
 }
 
@@ -40,4 +57,4 @@ async function saveAnswer(answer) {
 
 }
 
-module.exports = { saveQuestion, saveAnswer, findQuestion, findAnswer }
+module.exports = { saveQuestion, saveAnswer, findQuestion, findOneQuestion, findAnswer }

@@ -1,6 +1,6 @@
 const Router = require('express');
 const { createQuestionUseCase } = require('./use-case/createQuestion');
-const { listQuestions } = require('./use-case/listQuestions');
+const { listQuestions, listOneQuestions } = require('./use-case/listQuestions');
 const { createAnswerUseCase } = require('./use-case/createAnswer');
 
 
@@ -9,10 +9,22 @@ const router = Router();
 router.get('/questions', async (req, res) => {
 
     try {
-        const questions = await listQuestions()
+        const questions = await listQuestions();
         res.status(200).json(questions);
     } catch (error) {
         res.json({ status: 'Error getting questions!', message: error.message });
+    }
+
+});
+
+router.get('/questions/:id', async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const question = await listOneQuestions(id);
+        res.status(200).json(question);
+    } catch (error) {
+        res.json({ status: 'Error getting question!', message: error.message });
     }
 
 });
