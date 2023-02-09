@@ -1,37 +1,43 @@
-const Answer = require('../models/answer')
 const client = require('../src/repositories/clientDatabase')
-'use strict';
-const {
-  Model, DataTypes
-} = require('sequelize');
-const answer = require('../models/answer');
-  class Question extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      
-    }
-  }
-  Question.init({
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT,
-    user_name: DataTypes.STRING,
-    user_id: DataTypes.STRING,
-    question_id: DataTypes.STRING
-  }, {
-    sequelize: client,
-    modelName: 'Question',
-  });
-  Question.Answer = Answer.hasMany(Answer, {
-    foreignKey: "answer_id",
-    as: "answers",
-  });
-  
-  Answer.belongsTo(Question, { foreignKey: "id" });
+const Answer = require('./answer')
+const Keyword = require('./keyword');
+const { Model, DataTypes } = require('sequelize');
 
-  module.exports =  Question
-  
+class Question extends Model {
  
+  static associate(models) {
+
+  }
+}
+Question.init({
+  title: DataTypes.STRING,
+  body: DataTypes.TEXT,
+  user_name: DataTypes.STRING,
+  user_id: DataTypes.STRING,
+  question_id: DataTypes.STRING
+}, {
+  sequelize: client,
+  modelName: 'Question',
+});
+
+Question.Answer = Question.hasMany(Answer, {
+  foreignKey: 'question_id',
+  as: 'answers'
+});
+
+Question.Keyword = Question.hasMany(Keyword, {
+  foreignKey: 'question_id',
+  as: 'keywords'
+});
+
+Answer.belongsTo(Question, {
+  foreignKey: 'id',
+});
+
+
+Keyword.belongsTo(Question, {
+  foreignKey: 'id',
+});
+
+module.exports = Question
+

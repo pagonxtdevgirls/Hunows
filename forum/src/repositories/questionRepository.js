@@ -1,11 +1,15 @@
 
 const Question = require("../../models/question");
 const Answer = require("../../models/answer")
+const Keyword = require("../../models/keyword")
 
 async function saveQuestion(question) {
 
     const createdQuestion = await Question.create(question, {
-        include: [{ association: Answer }]
+        include: [
+            { association: Question.Answer, as: 'answers' },
+            { association: Question.Keyword, as: 'keywords' }
+        ]
     });
     await createdQuestion.save();
     return createdQuestion;
@@ -29,7 +33,7 @@ async function findAnswer() {
 async function saveAnswer(answer) {
 
     const createdAnswer = await Answer.create(answer, {
-        include: {association: Answer }
+        include: { association: Answer }
     });
     await createdAnswer.save();
     return createdAnswer;

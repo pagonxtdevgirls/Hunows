@@ -8,9 +8,9 @@ const questionValidator = joi.object({
     user_id: joi.string().trim().required()
 })
 
-async function createQuestionUseCase(question, id) {
-    const user_id = id;
-    const createQuestion = { user_id, ...question }
+async function createQuestionUseCase(question) {
+   // const user_id = id;
+   
    // const { error } = questionValidator.validate(createQuestion, { abortEarly: false });
 
     // if (error) {
@@ -24,7 +24,7 @@ async function createQuestionUseCase(question, id) {
     //     }
     // }
 
-    const savedQuestion = await saveQuestion(createQuestion)
+   return await saveQuestion(question)
 
     // return {
     //     hasErrors: false,
