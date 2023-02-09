@@ -4,20 +4,16 @@ const { saveQuestion } = require('../repositories/questionRepository');
 const questionValidator = joi.object({
     title: joi.string().trim().min(2).max(250).required(),
     body: joi.string().trim().min(10).max(5000).required(),
-    user_name: joi.string().trim().required(),
-    user_id: joi.string().trim().required(),
+    user_name: joi.string().trim(),
+    user_id: joi.string().trim(),
     keywords: joi.array().items(
         joi.object({
             name: joi.string().trim(),
-            keyword_id: joi.string().trim(),
         })
     ),
     answers: joi.array().items(
         joi.object({
-            body: joi.string().trim().min(10).max(5000).required(),
-            user_name: joi.string().trim().required(),
-            user_id: joi.string().trim().required(),
-            answer_id: joi.string().required(),
+            body: joi.string().trim().min(10).max(5000),
             soved: joi.string().trim(),
         })
     ),
