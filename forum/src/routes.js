@@ -1,8 +1,7 @@
 const Router = require('express');
 const { createQuestionUseCase } = require('./use-case/createQuestion');
 const { listQuestions, listOneQuestions } = require('./use-case/listQuestions');
-const { createAnswerUseCase } = require('./use-case/createAnswer');
-
+const Answer = require('../models/answer')
 
 const router = Router();
 
@@ -44,16 +43,18 @@ router.post('/questions', async function (req, res) {
 
 });
 
-router.post('/answers', async function (req, res) {
-    const id = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
-    const answers = req.body;
-    const { hasErrors, errors, answer } = await createAnswerUseCase(answers, id);
-
-    if (hasErrors) {
-        return res.status(400).json(errors);
+router.post('/question/:id/answers', async function (req, res) {
+    const {id} = req.params;
+    const question = await listOneQuestions(id);
+    if (!question) {
+        return res.status(404).json({message: 'question not found'});
     }
+    const {body} = req.body
+    const user_name = "Kauney"
+    const create = await Answer.create({ question_id: id, body, user_name})
+    create.save()
 
-    return res.status(201).json(answer);
+    return res.status(201).json(create);
 
 });
 
