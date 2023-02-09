@@ -2,6 +2,7 @@ const Router = require('express');
 const { createQuestionUseCase } = require('./use-case/createQuestion');
 const { listQuestions, listOneQuestions } = require('./use-case/listQuestions');
 const { createAnswerUseCase } = require('./use-case/createAnswer');
+const { decriptToken } = require('./helpers/decriptToken')
 
 
 const router = Router();
@@ -31,6 +32,22 @@ router.get('/questions/:id', async (req, res) => {
 
 
 router.post('/questions', async function (req, res) {
+    const authHeader = req.headers.authorization;
+    if(!authHeader) {
+        return res.status(401).json({message: 'Token authentication required'})
+    }
+
+    const token = authHeader.split(' ')[1]
+    if(!token){
+        return res.status(400).json({message: 'unexpected authorization header'})
+    }
+
+    const decriptedToken = decriptToken(token);
+    const userId = decriptedToken.userId;
+    if(!userId){
+        return res.status(403).json({message: 'Forbidden'})
+    }
+    
     const id = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
     const user_name = "Teste teste"
     const questions = req.body;
@@ -40,11 +57,27 @@ router.post('/questions', async function (req, res) {
         return res.status(400).json(errors);
     }
 
-    return res.status(201).json(question);
-
+    return res.status(201).json(question); 
 });
 
 router.post('/answers', async function (req, res) {
+
+    const authHeader = req.headers.authorization;
+    if(!authHeader) {
+        return res.status(401).json({message: 'Token authentication required'})
+    }
+
+    const token = authHeader.split(' ')[1]
+    if(!token){
+        return res.status(400).json({message: 'unexpected authorization header'})
+    }
+
+    const decriptedToken = decriptToken(token);
+    const userId = decriptedToken.userId;
+    if(!userId){
+        return res.status(403).json({message: 'Forbidden'})
+    }
+
     const id = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
     const answers = req.body;
     const { hasErrors, errors, answer } = await createAnswerUseCase(answers, id);
