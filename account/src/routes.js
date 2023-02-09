@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { createUser } from './use-case/createUser.js';
-import { viewAccountUseCase } from './use-case/viewAccountUseCase.js';
 import { createUserTokenUseCase } from './use-case/createUserToken.js';
 
 const router = Router();
