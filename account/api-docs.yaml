@@ -4,7 +4,7 @@ info:
   description: API para manipulação de contas de usuários do fórum Hunows
   version: 1.0.0
 
- contact:
+  contact:
     name: Ana
     email: ana@gmail.com.br
     password: 123456$

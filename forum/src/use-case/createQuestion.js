@@ -3,14 +3,26 @@ const { saveQuestion } = require('../repositories/questionRepository');
 
 const questionValidator = joi.object({
     title: joi.string().trim().min(2).max(250).required(),
-    question: joi.string().trim().min(10).max(5000).required(),
-    user_name: joi.string().trim().required(),
-    user_id: joi.string().trim().required()
+    body: joi.string().trim().min(10).max(5000).required(),
+    user_name: joi.string().trim(),
+    user_id: joi.string().trim(),
+    keywords: joi.array().items(
+        joi.object({
+            name: joi.string().trim(),
+        })
+    ),
+    answers: joi.array().items(
+        joi.object({
+            body: joi.string().trim().min(10).max(5000),
+            soved: joi.string().trim(),
+        })
+    ),
 })
 
-async function createQuestionUseCase(question, id) {
+async function createQuestionUseCase(question, id, name_user) {
     const user_id = id;
-    const createQuestion = { user_id, ...question }
+    const user_name = name_user;
+    const createQuestion = { user_id, user_name, ...question }
     const { error } = questionValidator.validate(createQuestion, { abortEarly: false });
 
     if (error) {
@@ -20,7 +32,7 @@ async function createQuestionUseCase(question, id) {
                 message: error.message,
                 property: error.path.at(0),
             })),
-            product: createQuestion,
+            question: createQuestion,
         }
     }
 
