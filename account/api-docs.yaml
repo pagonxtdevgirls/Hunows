@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: API Account
+  description: API para manipulação de contas de usuários do fórum Hunows
+  version: 1.0.0
+
+ contact:
+    name: Ana
+    email: ana@gmail.com.br
+    password: 123456$
+servers:
+  - url: "http://localhost:3000"
+    description: Server 1
+paths:
+  /users:
+    description: "route to register a new user account"
+    post:
+      tags: [User]
+      summary: "User registration"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createUser"
+      responses:
+        201:
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        400:
+          description: Error creating user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
