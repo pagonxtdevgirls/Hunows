@@ -21,7 +21,7 @@ export async function findOneUser(id) {
 
     const user = await User.findOne({
         where: { id: id },
-        
+
     });
     return user
 
