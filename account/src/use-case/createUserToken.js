@@ -4,7 +4,7 @@ import { findUserByEmail } from "../repositories/accountRepository.js"
 
 export async function createUserTokenUseCase(email, password) {
     const possibleUser = await findUserByEmail(email);
-
+    
     if (!possibleUser) {
         return null;
     }
@@ -12,7 +12,7 @@ export async function createUserTokenUseCase(email, password) {
 const passwordIsMatch = await comparePassword(password, possibleUser.password)
 
 if(passwordIsMatch) {
-    return generateToken(possibleUser._id);
+    return generateToken(possibleUser.id, possibleUser.name);
 }
 
 return null;
