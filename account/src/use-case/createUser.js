@@ -34,6 +34,10 @@ export async function createUser(name, email, password) {
     return {
         hasError: false,
         errors: undefined,
-        user: {...user}
+        user: {
+            name,
+            email
+        }
+
     };
 }
