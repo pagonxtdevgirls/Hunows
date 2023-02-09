@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: API Forum
+  description: API para gerenciamento do fórum de perguntas Hunows
+  version: 1.0.0
+
+  contact:
+    name: Ana
+    email: ana@gmail.com.br
+servers:
+  - url: "http://localhost:3001"
+    description: Server 1
+paths:
+  /questions:
+    description: "route to register a new question"
+    post:
+      tags: [Question]
+      summary: "Question registration"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createQuestionUseCase"
+      responses:
+        201:
+          description: Question created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionResponse"
+        400:
+          description: Error creating question
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string]
+
+                     /questions:
+            get:
+            responses:
+                200:
+                    description: Questions list
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/QuestionResponse"
+
+components:
+  schemas:
+    QuestionRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        user_name:
+          type: string
+        question:
+          type: string
+    QuestionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        user_name:
+          type: string
+        question:
+          type: string
