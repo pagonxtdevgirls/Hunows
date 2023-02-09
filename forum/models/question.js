@@ -1,10 +1,10 @@
-const client = require('../src/repositories/clientDatabase')
-const Answer = require('./answer')
-const Keyword = require('./keyword');
 const { Model, DataTypes } = require('sequelize');
+const client = require('../src/repositories/clientDatabase');
+const Answer = require('./answer');
+const Keyword = require('./keyword');
 
 class Question extends Model {
- 
+
   static associate(models) {
 
   }
@@ -13,8 +13,7 @@ Question.init({
   title: DataTypes.STRING,
   body: DataTypes.TEXT,
   user_name: DataTypes.STRING,
-  user_id: DataTypes.STRING,
-  question_id: DataTypes.STRING
+  user_id: DataTypes.STRING
 }, {
   sequelize: client,
   modelName: 'Question',
@@ -39,5 +38,6 @@ Keyword.belongsTo(Question, {
   foreignKey: 'id',
 });
 
-module.exports = Question
+module.exports = Question;
+
 

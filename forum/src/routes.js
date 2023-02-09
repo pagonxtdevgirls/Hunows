@@ -20,14 +20,15 @@ router.get('/questions', async (req, res) => {
 
 router.post('/questions', async function (req, res) {
     const id = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
+    const user_name = "kaueny teste"
     const questions = req.body;
-    const pergunta = await createQuestionUseCase(questions);
+    const { hasErrors, errors, question } = await createQuestionUseCase(questions, id, user_name);
 
-    // if (hasErrors) {
-    //     return res.status(400).json(errors);
-    // }
+    if (hasErrors) {
+        return res.status(400).json(errors);
+    }
 
-    return res.status(201).json(pergunta);
+    return res.status(201).json(question);
 
 });
 
