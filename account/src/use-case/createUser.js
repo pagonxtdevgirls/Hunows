@@ -1,10 +1,10 @@
 import { hashPassword } from '../helpers/password.js';
 import { saveAccount } from '../repositories/accountRepository.js';
 import joi from 'joi';
-
+    
     const accountValidator = joi.object({
         name: joi.string().trim().required(),
-        email: joi.string().trim().required().email(),
+        email: joi.string().pattern(new RegExp('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$')),
         password: joi.string().trim().min(6),
 })
 
