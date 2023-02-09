@@ -11,10 +11,25 @@ export async function findUserByEmail(email) {
     const user = await User.findOne({ where: {email} });
     return user;
 } 
-async function getUsersCollection() {
+export async function getUsersCollection() {
 
     const allUsers = await User.findAll();
     return allUsers
 }
+
+export async function findOneUser(id) {
+
+    const user = await User.findOne({
+        where: { id: id },
+
+    });
+    return user
+
+}
+
+
+
+
+
 
 
