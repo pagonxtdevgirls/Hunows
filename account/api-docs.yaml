@@ -7,7 +7,6 @@ info:
   contact:
     name: Ana
     email: ana@gmail.com.br
-    password: 123456$
 servers:
   - url: "http://localhost:3000"
     description: Server 1
