@@ -4,7 +4,7 @@ import joi from 'joi';
 
     const accountValidator = joi.object({
         name: joi.string().trim().required(),
-        email: joi.string().trim().email().required(),
+        email: joi.string().trim().required().email({  minDomainSegments : 2 ,  tlds : {  allow : [ 'com' ,  'net' ]  }}),
         password: joi.string().trim().min(6),
 })
 
