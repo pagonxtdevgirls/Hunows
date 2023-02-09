@@ -1,6 +1,9 @@
 import { Router } from 'express';
+import { findOneUser} from './repositories/accountRepository.js';
+
 import { createUser } from './use-case/createUser.js';
 import { createUserTokenUseCase } from './use-case/createUserToken.js';
+
 
 const router = Router();
 
@@ -29,11 +32,16 @@ router.post('/tokens', async (request, response) => {
     });
 });
 
-router.get('/users/:id', function(request, response) {
-    const accountId = request.params.id;
-    viewAccountUseCase(accountId).then(account => {
-        response.json(account);
-    });
+router.get('/users/:id', async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const user = await findOneUser(id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.json({ status: 'User not found', message: error.message });
+    }
+
 });
 
 export { router };
