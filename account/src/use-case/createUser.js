@@ -4,7 +4,7 @@ import joi from 'joi';
 
     const accountValidator = joi.object({
         name: joi.string().trim().required(),
-        email: joi.string().trim().required().email({  minDomainSegments : 2 ,  tlds : {  allow : [ 'com' ,  'net' ]  }}),
+        email: joi.string().trim().required().email(),
         password: joi.string().trim().min(6),
 })
 
@@ -34,6 +34,10 @@ export async function createUser(name, email, password) {
     return {
         hasError: false,
         errors: undefined,
-        user: {...user}
+        user: {
+            name,
+            email
+        }
+
     };
 }
