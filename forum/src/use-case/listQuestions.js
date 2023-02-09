@@ -1,8 +1,14 @@
-const { findQuestion } = require("../repositories/questionRepository");
+const { findQuestion, findOneQuestion } = require("../repositories/questionRepository");
 
 async function listQuestions() {
 
-    const questions = findQuestion();
+    const questions = await findQuestion();
     return questions;
 }
-module.exports = { listQuestions }
+
+async function listOneQuestions(id) {
+
+    const question = await findOneQuestion(id);
+    return question;
+}
+module.exports = { listQuestions, listOneQuestions }

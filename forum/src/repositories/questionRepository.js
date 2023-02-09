@@ -1,11 +1,16 @@
-const client = require("./clientDatabase")
-const DataTypes = require("sequelize");
-const Question = require("../../models/question")(client, DataTypes);
-const Response = require("../../models/response")(client, DataTypes)
+
+const Question = require("../../models/question");
+const Answer = require("../../models/answer")
+const Keyword = require("../../models/keyword")
 
 async function saveQuestion(question) {
 
-    const createdQuestion = await Question.create(question);
+    const createdQuestion = await Question.create(question, {
+        include: [
+            { association: Question.Answer, as: 'answers' },
+            { association: Question.Keyword, as: 'keywords' }
+        ]
+    });
     await createdQuestion.save();
     return createdQuestion;
 
@@ -13,17 +18,43 @@ async function saveQuestion(question) {
 
 async function findQuestion() {
 
-    const allQuestions = await Question.findAll();
-    return allQuestions
+    const questions = await Question.findAll({
+        include: [
+            { association: Question.Answer, as: 'answers' },
+            { association: Question.Keyword, as: 'keywords' }
+        ]
+    });
+    return questions
+
+}
+async function findOneQuestion(id) {
+
+    const question = await Question.findOne({
+        where: { id: id },
+        include: [
+            { association: Question.Answer, as: 'answers' },
+            { association: Question.Keyword, as: 'keywords' }
+        ]
+    });
+    return question
+
+}
+
+async function findAnswer() {
+
+    const allAnswers = await Answer.findAll();
+    return allAnswers
 
 }
 
 async function saveAnswer(answer) {
 
-    const createdAnswer = await Response.create(answer);
+    const createdAnswer = await Answer.create(answer, {
+        include: { association: Answer }
+    });
     await createdAnswer.save();
     return createdAnswer;
 
 }
 
-module.exports = { saveQuestion, saveAnswer, findQuestion }
+module.exports = { saveQuestion, saveAnswer, findQuestion, findOneQuestion, findAnswer }
