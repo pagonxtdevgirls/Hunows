@@ -3,7 +3,9 @@ const { createQuestionUseCase } = require('./use-case/createQuestion');
 const { listQuestions, listOneQuestions } = require('./use-case/listQuestions');
 
 const Answer = require('../models/answer')
-const { decriptToken } = require('./helpers/decriptToken')
+const { decriptToken } = require('./helpers/decriptToken');
+const questionValidate = require('./schemas/questionSchema');
+const answerValidate = require('./schemas/answerSchema');
 const router = Router();
 
 router.get('/questions', async (req, res) => {
@@ -31,6 +33,13 @@ router.get('/questions/:id', async (req, res) => {
 
 
 router.post('/questions', async function (req, res) {
+    const {error, value} = questionValidate(req.body)
+
+    if (error){
+        console.log(error)
+        return res.status(400).send(error.details)
+    }
+
     const authHeader = req.headers.authorization;
     if(!authHeader) {
         return res.status(401).json({message: 'Token authentication required'})
@@ -62,6 +71,13 @@ router.post('/questions', async function (req, res) {
 
 
 router.post('/question/:id/answers', async function (req, res) {
+    const {error, value} = answerValidate(req.body)
+
+    if (error){
+        console.log(error)
+        return res.status(400).send(error.details)
+    }
+     
     const {id} = req.params;
     const question = await listOneQuestions(id);
     if (!question) {
