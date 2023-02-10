@@ -1,5 +1,5 @@
 import { hashPassword } from '../helpers/password.js';
-import { saveAccount } from '../repositories/accountRepository.js';
+import { saveAccount, existsByEmail } from '../repositories/accountRepository.js';
 import joi from 'joi';
     
     const accountValidator = joi.object({
@@ -19,6 +19,21 @@ export async function createUser(name, email, password) {
                 message: error.message,
                 property: error.path.at(0),
             })),
+            account: {}
+        }
+    }
+
+    const alreadyRegistered = await existsByEmail(email);
+
+    if(alreadyRegistered) {
+        return {
+            hasError: true,
+            errors: [
+                {
+                    property: 'email',
+                    message: 'email already used'
+                }
+            ],
             account: {}
         }
     }
