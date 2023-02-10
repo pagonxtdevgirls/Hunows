@@ -20,7 +20,7 @@ services:
     volumes:
       - ./forum:/app
     ports:
-      - 3003:3003
+      - 3001:3000
 
   mysql_accounts:
     image: mysql
@@ -29,7 +29,7 @@ services:
       #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_DATABASE: ${MYSQL_ACCOUNT_DB}
       MYSQL_USER: ${MYSQL_USER}
     ports:
       - ${PORT_ACCOUNT}:3306

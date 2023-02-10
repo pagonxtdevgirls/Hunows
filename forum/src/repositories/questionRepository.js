@@ -1,12 +1,12 @@
 const Question = require("../../models/question");
 const Answer = require("../../models/answer");
-const Keyword = require("../../models/keyword");
+
 
 async function saveQuestion(question) {
   const createdQuestion = await Question.create(question, {
     include: [
       { association: Question.Answer, as: "answers" },
-      { association: Question.Keyword, as: "keywords" },
+
     ],
   });
   await createdQuestion.save();
@@ -17,7 +17,7 @@ async function findQuestion() {
   const questions = await Question.findAll({
     include: [
       { association: Question.Answer, as: "answers" },
-      { association: Question.Keyword, as: "keywords" },
+
     ],
   });
   return questions;
@@ -27,16 +27,20 @@ async function findOneQuestion(id) {
     where: { id: id },
     include: [
       { association: Question.Answer, as: "answers" },
-      { association: Question.Keyword, as: "keywords" },
+
     ],
   });
   return question;
 }
 
-// async function saveAnswer(body, id, user_name) {
-//   const createdAnswer = await Answer.create({ question_id: id, bo, user_name });
-//   createdAnswer.save();
-//   return createdAnswer;
-// }
+async function updateStatus(body, id, id_answer) {
+  const question = await findOneQuestion(id);
+  await question.update({
+    status: body, where: {
+      id_answer: id_answer
+    }
+  });
+  return question;
+}
 
-module.exports = { saveQuestion, findQuestion, findOneQuestion };
+module.exports = { saveQuestion, findQuestion, findOneQuestion, updateStatus };
