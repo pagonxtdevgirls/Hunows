@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 function decriptToken(token) {
     try {
         const tokenSecret =process.env.TOKEN_SECRET;
-        const { userId } = jwt.verify(token, tokenSecret);
+        const { userId, nameUser } = jwt.verify(token, tokenSecret);
 
-        return { userId }; 
+        return { userId, nameUser }; 
 
     } catch(error){
         console.log('error when verifying token', error.message);

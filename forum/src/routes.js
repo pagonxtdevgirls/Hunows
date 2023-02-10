@@ -1,10 +1,9 @@
 const Router = require('express');
 const { createQuestionUseCase } = require('./use-case/createQuestion');
 const { listQuestions, listOneQuestions } = require('./use-case/listQuestions');
-const { createAnswerUseCase } = require('./use-case/createAnswer');
+
+const Answer = require('../models/answer')
 const { decriptToken } = require('./helpers/decriptToken')
-
-
 const router = Router();
 
 router.get('/questions', async (req, res) => {
@@ -42,14 +41,14 @@ router.post('/questions', async function (req, res) {
         return res.status(400).json({message: 'unexpected authorization header'})
     }
 
-    const decriptedToken = decriptToken(token);
-    const userId = decriptedToken.userId;
+    const {userId, nameUser} = decriptToken(token);
+    console.log(userId, nameUser)
     if(!userId){
         return res.status(403).json({message: 'Forbidden'})
     }
     
-    const id = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
-    const user_name = "Teste teste"
+    const id = userId.toString();
+    const user_name = nameUser;
     const questions = req.body;
     const { hasErrors, errors, question } = await createQuestionUseCase(questions, id, user_name);
 
@@ -60,7 +59,13 @@ router.post('/questions', async function (req, res) {
     return res.status(201).json(question); 
 });
 
-router.post('/answers', async function (req, res) {
+
+
+router.post('/question/:id/answers', async function (req, res) {
+    const {id} = req.params;
+    const question = await listOneQuestions(id);
+    if (!question) {
+        return res.status(404).json({message: 'question not found'})};
 
     const authHeader = req.headers.authorization;
     if(!authHeader) {
@@ -78,15 +83,12 @@ router.post('/answers', async function (req, res) {
         return res.status(403).json({message: 'Forbidden'})
     }
 
-    const id = "c794d9e5-d988-40ed-90b2-c3b633c38c5b"
-    const answers = req.body;
-    const { hasErrors, errors, answer } = await createAnswerUseCase(answers, id);
+    const {body} = req.body
+    const user_name = "Kauney"
+    const create = await Answer.create({ question_id: id, body, user_name})
+    create.save()
 
-    if (hasErrors) {
-        return res.status(400).json(errors);
-    }
-
-    return res.status(201).json(answer);
+    return res.status(201).json(create);
 
 });
 

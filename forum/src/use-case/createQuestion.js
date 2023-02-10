@@ -11,12 +11,7 @@ const questionValidator = joi.object({
             name: joi.string().trim(),
         })
     ),
-    answers: joi.array().items(
-        joi.object({
-            body: joi.string().trim().min(10).max(5000),
-            soved: joi.string().trim(),
-        })
-    ),
+    answers: joi.array()
 })
 
 async function createQuestionUseCase(question, id, name_user) {
