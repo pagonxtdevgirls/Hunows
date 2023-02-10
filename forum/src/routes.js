@@ -6,7 +6,8 @@ const { listQuestions, listOneQuestions } = require('./use-case/listQuestions');
 
 const Answer = require('../models/answer')
 const { decriptToken } = require('./helpers/decriptToken');
-const Question = require('../models/question');
+
+const {  findOneQuestion } = require('./repositories/questionRepository');
 const router = Router();
 
 router.get('/questions', async (req, res) => {
@@ -86,36 +87,34 @@ router.post('/question/:id/answers', async function (req, res) {
     }
 
     const { body } = req.body
-    const user_name = nameUser;
-    const create = await Answer.create({ question_id: id, body, user_name })
+    const create = await Answer.create({ question_id: id, body, user_name: nameUser, user_id: userId })
     create.save()
 
     return res.status(201).json(create);
 
 });
 
+
 router.put('/questions/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { soved } = req.body;
-        //const question = await listOneQuestions(id);
-        const question = await Question.findByPk(id);
+        const { status, answer_id } = req.body;
+
+        const question = await findOneQuestion(id);
         if (!question) {
             return res.status(404).json({ message: 'Question not found' });
         }
 
-        await question.update({
-            soved: soved, where: {
-                id: req.body.id
-            }
-        });
+        question.status = status
+        question.answer_id = answer_id
+
+        await question.save()
 
         return res.status(200).json({ message: 'Question updated successfully' });
     } catch (error) {
         return res.status(500).json({ message: 'Error updating question', error });
     }
 });
-
 
 
 
