@@ -90,6 +90,20 @@ router.post('/question/:id/answers', async function (req, res) {
 
 });
 
+router.put('/questions/:id', async (req, res) => {
+
+    try {
+        const {soved, id} = req.body
+        const { id_question } = req.params.id;
+        const question = await listOneQuestions(id_question);
+        const update = await question.update({id, soved});
+        res.status(200).json(update);
+    } catch (error) {
+        res.json({ status: 'Error getting question!', message: error.message });
+    }
+
+});
+
 
 
 module.exports = router
