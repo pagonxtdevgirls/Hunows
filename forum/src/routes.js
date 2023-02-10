@@ -42,7 +42,6 @@ router.post('/questions', async function (req, res) {
     }
 
     const {userId, nameUser} = decriptToken(token);
-    console.log(userId, nameUser)
     if(!userId){
         return res.status(403).json({message: 'Forbidden'})
     }
@@ -77,14 +76,13 @@ router.post('/question/:id/answers', async function (req, res) {
         return res.status(400).json({message: 'unexpected authorization header'})
     }
 
-    const decriptedToken = decriptToken(token);
-    const userId = decriptedToken.userId;
+    const {userId, nameUser} = decriptToken(token);
     if(!userId){
         return res.status(403).json({message: 'Forbidden'})
     }
 
     const {body} = req.body
-    const user_name = "Kauney"
+    const user_name = nameUser;
     const create = await Answer.create({ question_id: id, body, user_name})
     create.save()
 
