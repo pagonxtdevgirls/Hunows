@@ -20,7 +20,7 @@ services:
     volumes:
       - ./forum:/app
     ports:
-      - 3003:3003
+      - 3001:3001
 
   mysql_accounts:
     image: mysql
