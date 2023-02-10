@@ -27,7 +27,10 @@ export async function findOneUser(id) {
 
 }
 
-
+export async function existsByEmail(email) {
+    const possibleUser = await findUserByEmail(email);
+    return !!possibleUser;
+}
 
 
 
