@@ -1,8 +1,11 @@
 const app = require("./app");
 const client = require("./repositories/clientDatabase")
+const yaml = require('yamljs')
+const swaggerUi = require('swagger-ui-express')
 
 const port = process.env.PORT;
-
+const swaggerDocs = yaml.load('api-docs.yaml')
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 const Connection = async () => {
     try {
         await client.authenticate();
